@@ -1,0 +1,510 @@
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#123c2b">
+<title>Gelson Receita</title>
+
+<style>
+:root {
+  --green:#123c2b;
+  --green2:#205b40;
+  --cream:#fffaf0;
+  --gold:#eab95c;
+  --text:#24372c;
+  --muted:#718078;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:var(--cream);
+  color:var(--text);
+}
+header{
+  background:var(--green);
+  color:white;
+  padding:17px 5%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+.logo{font-size:22px;font-weight:900}
+.logo span{color:var(--gold)}
+nav{display:flex;gap:14px}
+nav a{color:white;text-decoration:none;font-size:14px}
+.hero{
+  padding:70px 7%;
+  color:white;
+  background:
+    linear-gradient(90deg,#102f22ed,#102f2270),
+    url("https://images.unsplash.com/photo-1547592180-85f173990554?w=1400") center/cover;
+}
+.hero h1{
+  font-size:clamp(35px,6vw,58px);
+  max-width:650px;
+  margin:0 0 15px;
+}
+.hero p{max-width:570px;line-height:1.7}
+button{cursor:pointer}
+.primary{
+  background:var(--gold);
+  color:#2d281c;
+  border:0;
+  padding:14px 22px;
+  border-radius:25px;
+  font-weight:bold;
+}
+main{max-width:1150px;margin:auto;padding:30px 5%}
+.heading{margin:35px 0 18px}
+.heading h2{margin:0 0 8px}
+.heading p{color:var(--muted)}
+.search{
+  width:100%;
+  padding:15px;
+  border:1px solid #dce3dc;
+  border-radius:12px;
+  font-size:15px;
+}
+.filters{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  margin:18px 0 25px;
+}
+.filter{
+  background:white;
+  border:1px solid #d9e1da;
+  border-radius:22px;
+  padding:10px 15px;
+}
+.filter.active{
+  background:var(--green);
+  color:white;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(225px,1fr));
+  gap:20px;
+}
+.card{
+  background:white;
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 8px 24px #183a2512;
+}
+.card img{
+  width:100%;
+  height:175px;
+  object-fit:cover;
+  display:block;
+}
+.info{padding:16px}
+.info h3{margin:9px 0}
+.info p{font-size:14px;color:var(--muted);line-height:1.5}
+.meta{font-size:12px;color:var(--green2);font-weight:bold}
+.card button{
+  width:100%;
+  padding:12px;
+  border:0;
+  border-radius:9px;
+  background:var(--green);
+  color:white;
+  font-weight:bold;
+}
+.locked{border:2px solid var(--gold);position:relative}
+.tag{
+  position:absolute;
+  top:12px;
+  left:12px;
+  background:var(--gold);
+  color:#30230b;
+  padding:7px 10px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:bold;
+}
+.premium{
+  background:var(--green);
+  color:white;
+  text-align:center;
+  border-radius:20px;
+  padding:35px 20px;
+  margin:55px 0;
+}
+.premium h2{font-size:29px}
+.premium strong{color:var(--gold);font-size:32px}
+.premium p{line-height:1.7}
+footer{
+  background:#0b281c;
+  color:#ddd;
+  text-align:center;
+  padding:30px 15px;
+  line-height:1.8;
+}
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#0009;
+  z-index:20;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+}
+.dialog{
+  background:white;
+  border-radius:17px;
+  padding:23px;
+  width:100%;
+  max-width:540px;
+  max-height:90vh;
+  overflow:auto;
+}
+.dialog img{
+  width:100%;
+  height:210px;
+  object-fit:cover;
+  border-radius:12px;
+}
+.close{
+  float:right;
+  border:0;
+  background:#eee;
+  padding:9px 13px;
+  border-radius:20px;
+}
+.dialog li{margin:9px 0;line-height:1.5}
+.paybutton{
+  width:100%;
+  padding:14px;
+  background:var(--green);
+  color:white;
+  border:0;
+  border-radius:10px;
+  font-weight:bold;
+}
+.notice{
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.6;
+}
+.empty{
+  padding:25px;
+  color:var(--muted);
+  text-align:center;
+}
+@media(max-width:600px){
+  header{padding:14px 4%}
+  .logo{font-size:18px}
+  nav{gap:9px}
+  nav a{font-size:12px}
+  main{padding:20px 4%}
+  .hero{padding:55px 6%}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">Gelson <span>Receita.</span></div>
+  <nav>
+    <a href="#inicio">Início</a>
+    <a href="#gratuitas">Receitas</a>
+    <a href="#premium">Premium</a>
+  </nav>
+</header>
+
+<section class="hero" id="inicio">
+  <h1>O sabor começa aqui.</h1>
+  <p>
+    Descobre receitas deliciosas, aprende a cozinhar
+    e transforma cada refeição num momento especial.
+  </p>
+  <button class="primary"
+    onclick="document.getElementById('gratuitas').scrollIntoView({behavior:'smooth'})">
+    Explorar receitas
+  </button>
+</section>
+
+<main>
+
+<section id="gratuitas">
+  <div class="heading">
+    <h2>🍲 Receitas gratuitas</h2>
+    <p>Receitas disponíveis para todos, sem precisar de Premium.</p>
+  </div>
+
+  <input class="search" id="search"
+    placeholder="Pesquisar uma receita..."
+    oninput="render()">
+
+  <div class="filters">
+    <button class="filter active" onclick="choose('Todas',this)">Todas</button>
+    <button class="filter" onclick="choose('Angolana',this)">Angolanas</button>
+    <button class="filter" onclick="choose('Internacional',this)">Internacionais</button>
+    <button class="filter" onclick="choose('Sobremesa',this)">Sobremesas</button>
+    <button class="filter" onclick="choose('Bebida',this)">Bebidas</button>
+  </div>
+
+  <div class="grid" id="freeGrid"></div>
+</section>
+
+<section id="premium">
+  <div class="premium">
+    <h2>⭐ Gelson Receita Premium</h2>
+    <p>Desbloqueia receitas exclusivas e descobre novos sabores.</p>
+    <strong>5.000 Kz</strong>
+    <p>
+      <button class="primary" onclick="openPayment()">
+        Comprar Premium
+      </button>
+    </p>
+    <small>As receitas gratuitas continuam disponíveis para todos.</small>
+  </div>
+
+  <div class="heading">
+    <h2>🔒 Receitas Premium</h2>
+    <p>Conteúdos especiais para membros Premium.</p>
+  </div>
+
+  <div class="grid" id="premiumGrid"></div>
+</section>
+
+</main>
+
+<footer>
+  <strong>Gelson Receita</strong><br>
+  Receitas simples, sabores inesquecíveis.<br>
+  © 2026 Gelson Receita
+</footer>
+
+<!-- Janela de receitas -->
+<div class="modal" id="recipeModal">
+  <div class="dialog" id="recipeDialog"></div>
+</div>
+
+<!-- Janela PayPay -->
+<div class="modal" id="paymentModal">
+  <div class="dialog">
+    <button class="close" onclick="closePayment()">Fechar ✕</button>
+
+    <h2>⭐ Gelson Receita Premium</h2>
+    <h3>5.000 Kz</h3>
+
+    <p><strong>Método de pagamento:</strong> PayPay</p>
+
+    <p>Número PayPay:</p>
+    <h2>953 059 357</h2>
+
+    <p>
+      Titular: Gelson André Agostinho
+    </p>
+
+    <hr>
+
+    <p>1. Faz a transferência de 5.000 Kz pela PayPay.</p>
+    <p>2. Guarda o comprovativo.</p>
+    <p>3. Aguarda a confirmação do pagamento.</p>
+
+    <p class="notice" id="paymentMessage">
+      O acesso Premium só será ativado depois de confirmar
+      que o pagamento foi recebido.
+    </p>
+
+    <button class="paybutton" onclick="confirmPayment()">
+      Já fiz o pagamento
+    </button>
+  </div>
+</div>
+
+<script>
+const recipes = [
+{
+name:"Funge com calulu",cat:"Angolana",free:true,time:"45 min",
+image:"https://images.unsplash.com/photo-1547592180-85f173990554?w=700",
+desc:"Um prato tradicional muito apreciado em Angola.",
+ingredients:["Farinha de milho ou mandioca","Água","Calulu","Peixe ou carne"],
+steps:["Prepara o calulu.","Ferve água numa panela.","Adiciona a farinha aos poucos, mexendo sempre.","Serve com o calulu."]
+},
+{
+name:"Muamba de galinha",cat:"Angolana",free:true,time:"60 min",
+image:"https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=700",
+desc:"Um dos pratos mais conhecidos da cozinha angolana.",
+ingredients:["Galinha","Óleo de palma","Alho","Cebola","Quiabos","Sal"],
+steps:["Tempera a galinha.","Coloca os ingredientes numa panela.","Adiciona água e deixa cozinhar.","Serve com funge."]
+},
+{
+name:"Arroz com feijão",cat:"Angolana",free:true,time:"35 min",
+image:"https://images.unsplash.com/photo-1516684732162-798a0062be99?w=700",
+desc:"Uma refeição simples e saborosa.",
+ingredients:["Arroz","Feijão","Cebola","Alho","Sal"],
+steps:["Prepara o arroz.","Aquece o feijão.","Tempera a gosto.","Serve juntos."]
+},
+{
+name:"Peixe grelhado",cat:"Angolana",free:true,time:"30 min",
+image:"https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=700",
+desc:"Peixe temperado e preparado na grelha.",
+ingredients:["Peixe","Limão","Alho","Sal"],
+steps:["Limpa o peixe.","Tempera com limão e alho.","Grelha até estar bem cozinhado."]
+},
+{
+name:"Bolo simples",cat:"Sobremesa",free:true,time:"50 min",
+image:"https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=700",
+desc:"Um bolo caseiro para o lanche.",
+ingredients:["Farinha","Ovos","Açúcar","Leite","Fermento"],
+steps:["Mistura os ovos e o açúcar.","Adiciona o leite e a farinha.","Junta o fermento.","Leva ao forno até estar cozido."]
+},
+{
+name:"Sumo de laranja",cat:"Bebida",free:true,time:"10 min",
+image:"https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=700",
+desc:"Uma bebida fresca e natural.",
+ingredients:["Laranjas","Água","Gelo"],
+steps:["Lava e corta as laranjas.","Esprema o sumo.","Adiciona água se necessário.","Serve fresco."]
+},
+{
+name:"Massa com tomate",cat:"Internacional",free:true,time:"25 min",
+image:"https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=700",
+desc:"Uma massa simples para qualquer dia.",
+ingredients:["Massa","Tomate","Alho","Cebola","Sal"],
+steps:["Coze a massa.","Prepara o molho de tomate.","Mistura e serve."]
+},
+{
+name:"Salada de frutas",cat:"Sobremesa",free:true,time:"15 min",
+image:"https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=700",
+desc:"Uma sobremesa colorida.",
+ingredients:["Banana","Maçã","Papaia","Laranja"],
+steps:["Lava e corta as frutas.","Mistura numa taça.","Serve fresca."]
+},
+{
+name:"Panquecas",cat:"Internacional",free:true,time:"20 min",
+image:"https://images.unsplash.com/photo-1528207776546-365bb710ee93?w=700",
+desc:"Panquecas para o pequeno-almoço.",
+ingredients:["Farinha","Leite","Ovo","Açúcar"],
+steps:["Mistura os ingredientes.","Aquece uma frigideira.","Cozinha dos dois lados."]
+},
+{
+name:"Limonada",cat:"Bebida",free:true,time:"10 min",
+image:"https://images.unsplash.com/photo-1513558161293-cdaf765edfd4?w=700",
+desc:"Uma bebida refrescante.",
+ingredients:["Limões","Água","Açúcar"],
+steps:["Esprema os limões.","Mistura com água.","Adiciona açúcar a gosto."]
+},
+{
+name:"Cachupa especial",cat:"Angolana",free:false,time:"90 min",
+image:"https://images.unsplash.com/photo-1547592180-85f173990554?w=700",
+desc:"Uma receita especial da coleção Premium.",
+ingredients:["Milho","Feijão","Legumes","Carne ou peixe"],
+steps:["Prepara os ingredientes.","Cozinha os grãos.","Adiciona legumes e proteína.","Termina a cozedura."]
+},
+{
+name:"Lasanha especial",cat:"Internacional",free:false,time:"75 min",
+image:"https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=700",
+desc:"Uma receita especial para partilhar.",
+ingredients:["Massa de lasanha","Molho","Queijo","Carne"],
+steps:["Prepara o recheio.","Monta as camadas.","Adiciona queijo.","Leva ao forno."]
+},
+{
+name:"Tarte de chocolate",cat:"Sobremesa",free:false,time:"55 min",
+image:"https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=700",
+desc:"Uma sobremesa especial de chocolate.",
+ingredients:["Farinha","Chocolate","Ovos","Açúcar","Manteiga"],
+steps:["Prepara a base.","Mistura o recheio.","Coloca numa forma.","Leva ao forno."]
+},
+{
+name:"Batido tropical",cat:"Bebida",free:false,time:"10 min",
+image:"https://images.unsplash.com/photo-1505252585461-04db1eb84625?w=700",
+desc:"Uma bebida cremosa de frutas.",
+ingredients:["Banana","Manga","Leite"],
+steps:["Prepara as frutas.","Coloca no liquidificador.","Tritura até ficar cremoso."]
+}
+];
+
+let selectedFilter="Todas";
+
+function choose(category,button){
+selectedFilter=category;
+document.querySelectorAll(".filter").forEach(b=>b.classList.remove("active"));
+button.classList.add("active");
+render();
+}
+
+function render(){
+const query=document.getElementById("search").value.toLowerCase();
+const filtered=recipes.filter(r=>
+(selectedFilter==="Todas"||r.cat===selectedFilter) &&
+r.name.toLowerCase().includes(query)
+);
+document.getElementById("freeGrid").innerHTML=
+filtered.filter(r=>r.free).map(cardHTML).join("") ||
+'<div class="empty">Nenhuma receita encontrada.</div>';
+document.getElementById("premiumGrid").innerHTML=
+filtered.filter(r=>!r.free).map(cardHTML).join("") ||
+'<div class="empty">Nenhuma receita Premium encontrada.</div>';
+}
+
+function cardHTML(r){
+const index=recipes.indexOf(r);
+return `
+<article class="card ${r.free?'':'locked'}">
+${r.free?'':'<span class="tag">🔒 PREMIUM</span>'}
+<img src="${r.image}" alt="${r.name}" loading="lazy"
+onerror="this.style.display='none'">
+<div class="info">
+<div class="meta">${r.cat} · ${r.time}</div>
+<h3>${r.name}</h3>
+<p>${r.desc}</p>
+<button onclick="openRecipe(${index})">
+${r.free?'Ver receita':'Comprar acesso'}
+</button>
+</div>
+</article>`;
+}
+
+function openRecipe(index){
+const r=recipes[index];
+if(!r.free){
+openPayment();
+return;
+}
+document.getElementById("recipeDialog").innerHTML=`
+<button class="close" onclick="closeRecipe()">Fechar ✕</button>
+<img src="${r.image}" alt="${r.name}">
+<h2>${r.name}</h2>
+<p>${r.desc}</p>
+<p><strong>Tempo:</strong> ${r.time}</p>
+<h3>Ingredientes</h3>
+<ul>${r.ingredients.map(x=>`<li>${x}</li>`).join("")}</ul>
+<h3>Modo de preparação</h3>
+<ol>${r.steps.map(x=>`<li>${x}</li>`).join("")}</ol>
+`;
+document.getElementById("recipeModal").style.display="flex";
+}
+
+function closeRecipe(){
+document.getElementById("recipeModal").style.display="none";
+}
+function openPayment(){
+document.getElementById("paymentModal").style.display="flex";
+}
+function closePayment(){
+document.getElementById("paymentModal").style.display="none";
+}
+function confirmPayment(){
+document.getElementById("paymentMessage").textContent=
+"A tua indicação foi recebida neste ecrã, mas o pagamento ainda precisa de confirmação. O Premium não foi ativado.";
+}
+
+render();
+</script>
+
+</body>
+</html>
+
